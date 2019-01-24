@@ -44,7 +44,8 @@ return [
 
         'pgsql' => [
             'driver'   => 'pgsql',
-            'host'     => env('DB_HOST', '127.0.0.1'),
+            'host'     => env('DB_HOST', 'postgres://merwrnaahstyfp:5a1dd11546ace2b97d57856439ae55b229890cfa968f1082bd3b65290182b67a@ec2-54-221-253-228.compute-1.amazonaws.com:5432/d485r6msbfmie9
+'),
             'port'     => env('DB_PORT', 5432),
             'database' => env('DB_DATABASE', 'student'),
             'username' => env('DB_USERNAME', 'root'),
