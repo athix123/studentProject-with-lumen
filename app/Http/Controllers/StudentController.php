@@ -302,7 +302,7 @@ class StudentController extends Controller
 			
 			return response()->json($response, 403);
 		
-		} else if { ($request->hasFile('profile_picture')) {
+		} else if ($request->hasFile('profile_picture')) {
 			$image = $request->file('profile_picture');
 			$name = str_random(15).'.'.$image->getClientOriginalExtension();
 			$path = 'images/';
