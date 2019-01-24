@@ -180,8 +180,8 @@ class StudentController extends Controller
 
 		if($student == null) {
 			$response = [
-			'status' => 'Forbidden',
-			'messages' => 'Id is not exist',
+				'status' => 'Forbidden',
+				'messages' => 'Id is not exist'
 			];
 			
 			return response()->json($response, 403);
@@ -233,6 +233,7 @@ class StudentController extends Controller
 		}
 
 		$response = [
+
 			'status' => 'Success',
 			'messages' => 'Data has been updated'
 		];
@@ -267,22 +268,25 @@ class StudentController extends Controller
 	public function postFile(Request $request) {
 		
 		if ($request->hasFile('profile_picture')) {
+
 			$image = $request->file('profile_picture');
 			$name = str_random(15).'.'.$image->getClientOriginalExtension();
 			$path = 'images/';
 			$image->move($path, $name);
 
 			$response = [
-			'status' => 'Success',
-			'messages' => 'File uploaded',
-			'url' => url().'/'.$path.$name,
+				'status' => 'Success',
+				'messages' => 'File uploaded',
+				'url' => url().'/'.$path.$name
 			];
 
 			return response()->json($response, 200); 
+
 		} else {
+
 			$response = [
-			'status' => 'Error',
-			'messages' => 'Failed to upload'
+				'status' => 'Error',
+				'messages' => 'Failed to upload'
 			];
 
 			return response()->json($response, 403);
@@ -296,13 +300,14 @@ class StudentController extends Controller
 		if ($about == null) {
 
 			$response = [
-			'status' => 'Forbidden',
-			'messages' => 'Id is not exist',
+				'status' => 'Forbidden',
+				'messages' => 'Id is not exist'
 			];
 			
 			return response()->json($response, 403);
 		
 		} else if ($request->hasFile('profile_picture')) {
+
 			$image = $request->file('profile_picture');
 			$name = str_random(15).'.'.$image->getClientOriginalExtension();
 			$path = 'images/';
@@ -314,16 +319,18 @@ class StudentController extends Controller
 			$student->save();
 
 			$response = [
-			'status' => 'Success',
-			'messages' => 'File uploaded',
-			'url' => url().'/'.$path.$name,
+				'status' => 'Success',
+				'messages' => 'File uploaded',
+				'url' => url().'/'.$path.$name
 			];
 
 			return response()->json($response, 200); 
+
 		} else {
+
 			$response = [
-			'status' => 'Error',
-			'messages' => 'Failed to upload'
+				'status' => 'Error',
+				'messages' => 'Failed to upload'
 			];
 
 			return response()->json($response, 403);

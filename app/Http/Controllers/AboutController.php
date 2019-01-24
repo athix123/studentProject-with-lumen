@@ -24,6 +24,26 @@ class AboutController extends Controller
 		return response()->json($about, 200);
 	}
 
+	public function create(Request $request){
+		$about = $request->all();
+		
+		if($about == null) {
+			$response['status'] = 'Error';
+			$response['message'] = 'Please fill the empty blank';
+
+			return response()->json($response, 403);
+		} else {
+			$about = new About;
+			$about->description = $request->input('description');
+			$about->save();
+		
+			$response['status'] = 'Success';
+			$response['message'] = 'New about Submitted';
+		
+			return response()->json($response, 200);
+		}
+	}
+
 	public function updatedesc(Request $request, $id) {
 		
 		$inputan =$request->all();

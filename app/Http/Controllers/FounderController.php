@@ -19,6 +19,26 @@ class FounderController extends Controller
 		return response()->json($founder);
 	}
 
+	public function create(Request $request){
+		$founder = $request->all();
+		
+		if($founder == null) {
+			$response['status'] = 'Error';
+			$response['message'] = 'Please fill the empty blank';
+
+			return response()->json($response, 403);
+		} else {
+			$founder = new Founder;
+			$founder->description = $request->input('description');
+			$founder->save();
+		
+			$response['status'] = 'Success';
+			$response['message'] = 'New founder Submitted';
+		
+			return response()->json($response, 200);
+		}
+	}
+
 	public function updatedesc(Request $request, $id) {
 		
 		$inputan =$request->all();

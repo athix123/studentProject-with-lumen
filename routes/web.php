@@ -75,7 +75,7 @@ $router->group(['prefix' => 'v1/about'], function () use ($router) {
 	$router->get('','AboutController@get');
 	$router->post('/updatefile/{id}', 'AboutController@updatefile');
 	$router->put('/update/{id}','AboutController@updatedesc');
-	// $router->post('','AboutController@create');
+	$router->post('','AboutController@create');
 	// $router->post('/uploadfile', 'AboutController@uploadFile');
 });
 
@@ -84,6 +84,7 @@ $router->group(['prefix' => 'v1/founder'], function () use ($router) {
 	$router->get('','FounderController@get');
 	$router->post('/updatefile/{id}','FounderController@updatefile');
 	$router->put('/update/{id}','FounderController@updatedesc');
+	$router->post('','FounderController@create');
 });
 
 // Router for OurWork

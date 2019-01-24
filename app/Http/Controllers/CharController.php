@@ -27,10 +27,12 @@ class CharacterController extends Controller
 
 	public function getById($id){
 		$char = Character::find($id);
+
 		if($char){
+
 			$response['result'] = $char;
 
-			return response()->json($response);
+			return response()->json($response, 200);
 		}
 
 		$response = ['status' => 'Error',
@@ -50,38 +52,63 @@ class CharacterController extends Controller
 			$response['status'] = 'Success';
 			$response['message'] = 'New Character Submitted';
 			
-			return response()->json($response);
-	    }
-	    catch (\Exception $e){
+			return response()->json($response, 200);
+	    
+	    } catch (\Exception $e){
+	    
 	        $error_code = $e->errorInfo[1];
+	    
 	        if($error_code == 1062){
-	            return 'You have a duplicate entry problem';
+
+	        	$response = [
+				'status' => 'Error',
+				'messages' => 'You have a duplicate entry problem'
+				];
+	    
+	            return response()->json($response, 400);
 	        }
-	    }
+    	}
 	}
 
 	public function update(Request $request, $id) {
-		$inputan = $request->all();
+		try {
 
-		$char = Character::find($id);
+			$inputan = $request->all();
 
-		if($char) {
-			Character::where('id', $id);
-			$char->name = $inputan['name'];
-			$char->description = $inputan['description'];
-			// $char->major_id = $inputan['major_id'];
-			$char->save();
-		
-			$response['status'] = 'Success';
-			$response['message'] = 'Character with name '. $char->name .' updated';
-		
-			return response()->json($response);
-		} else {
-			$response['status'] = 'Error';
-			$response['message'] = 'Character with id ' . $id . ' Not Found';
-		
-			return response()->json($response, 404);
-		}
+			$char = Character::find($id);
+
+			if($char) {
+				Character::where('id', $id);
+				$char->name = $inputan['name'];
+				$char->description = $inputan['description'];
+				// $char->major_id = $inputan['major_id'];
+				$char->save();
+			
+				$response['status'] = 'Success';
+				$response['message'] = 'Character with name '. $char->name .' updated';
+			
+				return response()->json($response);
+			} else {
+				$response['status'] = 'Error';
+				$response['message'] = 'Character with id ' . $id . ' Not Found';
+			
+				return response()->json($response, 404);
+			}
+			
+		} catch (\Exception $e){
+	    
+	        $error_code = $e->errorInfo[1];
+	    
+	        if($error_code == 1062){
+
+	        	$response = [
+				'status' => 'Error',
+				'messages' => 'You have a duplicate entry problem'
+				];
+	    
+	            return response()->json($response, 400);
+	        }
+    	}
 	}
 
 	public function delete(Request $request, $id) {
