@@ -1,5 +1,5 @@
 <?php
-$url = parse_url(getenv("DATABASE_URL"));
+$url = parse_url(getenv("postgres://merwrnaahstyfp:5a1dd11546ace2b97d57856439ae55b229890cfa968f1082bd3b65290182b67a@ec2-54-221-253-228.compute-1.amazonaws.com:5432/d485r6msbfmie9"));
 
 // $host = $url["host"];
 // $username = $url["root"];
