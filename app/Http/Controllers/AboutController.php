@@ -84,9 +84,9 @@ class AboutController extends Controller
 			
 			return response()->json($response, 403);
 
-		} elseif ($request->hasFile('file')) {
+		} elseif ($request->hasFile('images')) {
 
-			$image = $request->file('file');
+			$image = $request->file('images');
 			$fileName = str_random(15).'.'.$image->getClientOriginalExtension();
 			$path = 'images/';
 			$image->move($path, $fileName);
