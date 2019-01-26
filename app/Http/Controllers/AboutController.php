@@ -59,7 +59,8 @@ class AboutController extends Controller
 			return response()->json($response, 403);
 		} else {
 
-			$about->update(['description' => $inputan['description']]);
+			$about->update(['description' => $inputan['description'],
+							'file' => $inputan['file']]);
 
 			$response = [
 			'status' => 'Success',
@@ -84,9 +85,9 @@ class AboutController extends Controller
 			
 			return response()->json($response, 403);
 
-		} elseif ($request->hasFile('images')) {
+		} elseif ($request->hasFile('file')) {
 
-			$image = $request->file('images');
+			$image = $request->file('file');
 			$fileName = str_random(15).'.'.$image->getClientOriginalExtension();
 			$path = 'images/';
 			$image->move($path, $fileName);

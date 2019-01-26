@@ -16,7 +16,7 @@ class TableCharacter extends Migration
         Schema::create('karakter', function (Blueprint $table){
             $table->increments('id');
             $table->string('name', 30)->unique();
-            $table->string('description', 140);
+            $table->string('description', 140)->nullable();
             $table->timestamps();
         });
     }

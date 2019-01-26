@@ -23,7 +23,7 @@ class CreateNewStudentsTable extends Migration
             $table->string('status');
             $table->integer('major');
             $table->integer('generations');
-            $table->string('profile_picture');
+            $table->string('profile_picture')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

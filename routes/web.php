@@ -16,11 +16,11 @@ $router->get('/', function () use ($router) {
 });
 
 // Router Login Auth
-$router->post('/register', 'UserController@register');
-$router->post('/login', 'UserController@login');
+$router->post('/v1/register', 'UserController@register');
+$router->post('/v1/login', 'UserController@login');
 $router->get('/user/{id}', 'LoginController@index');
-$router->get('/student/all', ['middleware' => 'auth', 'uses' =>  'StudentController@all']
-	);
+$router->get('/student/all', ['middleware' => 'auth', 'uses' =>  'StudentController@all']);
+$router->post('/v1/studentbox','DoesBoxController@upload');
 
 // Router for Students
 $router->group(['prefix' => 'v1/student'], function () use ($router) {
@@ -97,6 +97,3 @@ $router->group(['prefix' => 'v1/ourwork'], function () use ($router) {
 	$router->put('/update/{id}', 'OurWorkController@update');
 	$router->delete('/delete/{id}', 'OurWorkController@delete');
 });
-
-$router->get('/dropbox','DropBoxController@testFile');
-$router->post('/dropbox','DropBoxController@upload');

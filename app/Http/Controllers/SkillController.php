@@ -73,7 +73,7 @@ class SkillController extends Controller
 
 		try {
 
-	        	$skill = new Skill;
+	      		$skill = new Skill;
 			$skill->name = $request->input('name');
 			$skill->description = $request->input('description');
 			$skill->major_id = $request->input('major_id');

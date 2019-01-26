@@ -54,7 +54,9 @@ class FounderController extends Controller
 			return response()->json($response, 403);
 		} else {
 
-			$founder->update(['description' => $inputan['description']]);
+			$founder->update(['description' => $inputan['description'],
+								'file' => $inputan['file'],
+							]);
 
 			$response = [
 			'status' => 'Success',

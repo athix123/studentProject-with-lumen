@@ -16,7 +16,7 @@ class TableAbout extends Migration
             Schema::create('about', function (Blueprint $table) {
             $table->increments('id');
             $table->text('description');
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

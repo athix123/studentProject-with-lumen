@@ -15,10 +15,10 @@ class CreateOurWork extends Migration
     {
         Schema::create('our_works', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('category');
+            $table->string('category')->nullable();
             $table->string('title')->unique();
-            $table->string('url_website');
-            $table->string('file');
+            $table->string('url_website')->nullable();
+            $table->string('file')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ class TableJurusan extends Migration
         Schema::create('major', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('description');
+            $table->string('description')->nullable();
             // $table->string('tag'); // [design, 3d, ]
             $table->softDeletes();
             $table->timestamps();
