@@ -14,7 +14,7 @@ use GrahamCampbell\Flysystem\Facades\Flysystem;
 class AboutController extends Controller
 {
 	public function __construct(){
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	public function get(Request $request){
@@ -44,7 +44,7 @@ class AboutController extends Controller
 		}
 	}
 
-	public function updatedesc(Request $request, $id) {
+	public function update(Request $request, $id) {
 		
 		$inputan =$request->all();
 
@@ -70,41 +70,5 @@ class AboutController extends Controller
 			
 			return response()->json($response, 200);
 		}
-	}
-
-	public function updatefile(Request $request, $id) {
-
-		$about = About::find($id);
-
-		if ($about == null) {
-
-			$response = [
-			'status' => 'Forbidden',
-			'messages' => 'Id is not exist',
-			];
-			
-			return response()->json($response, 403);
-
-		} elseif ($request->hasFile('file')) {
-
-			$image = $request->file('file');
-			$fileName = str_random(15).'.'.$image->getClientOriginalExtension();
-			$path = 'images/';
-			$image->move($path, $fileName);
-		
-			File::delete($about->file); 
-			
-			$about->file = $path . $fileName;
-
-			$response = [
-			'status' => 'Success',
-			'messages' => 'File uploaded',
-			'url' => url().'/'.$path.$fileName,
-			];	
-		}	
-
-		$about->save();
-		
-		return response()->json($response); 
 	}
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 class FounderController extends Controller
 {
 	public function __construct(){
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	public function get(Request $request){
@@ -39,7 +39,7 @@ class FounderController extends Controller
 		}
 	}
 
-	public function updatedesc(Request $request, $id) {
+	public function update(Request $request, $id) {
 		
 		$inputan =$request->all();
 
@@ -66,42 +66,6 @@ class FounderController extends Controller
 			
 			return response()->json($response);
 		}
-	}
-
-	public function updatefile(Request $request, $id) {
-
-		$founder = Founder::find($id);
-
-		if ($founder == null) {
-
-			$response = [
-			'status' => 'Forbidden',
-			'messages' => 'Id is not exist',
-			];
-			
-			return response()->json($response, 403);
-
-		} elseif ($request->hasFile('file')) {
-
-			$image = $request->file('file');
-			$fileName = str_random(15).'.'.$image->getClientOriginalExtension();
-			$path = 'images/';
-			$image->move($path, $fileName);
-		
-			File::delete($founder->file); 
-			
-			$founder->file = $path . $fileName;
-
-			$response = [
-			'status' => 'Success',
-			'messages' => 'File uploaded',
-			'url' => url().'/'.$path.$fileName,
-			];
-		} 
-	
-		$founder->save();
-	
-		return response()->json($response, 200); 
 	}
 }
 

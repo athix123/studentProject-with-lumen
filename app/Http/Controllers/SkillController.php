@@ -10,7 +10,7 @@ use App\Studentskill;
 class SkillController extends Controller
 {
 	public function __construct(){
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	public function all(Request $request){
@@ -47,7 +47,7 @@ class SkillController extends Controller
 		}
 
 		$response['status'] = 'Error';
-		$response['message'] = 'Major with id ' .$id. ' Not Found';
+		$response['message'] = 'Skill with id ' .$id. ' Not Found';
 		
 		return response()->json($response, 404);
 	}
@@ -73,7 +73,7 @@ class SkillController extends Controller
 
 		try {
 
-	      		$skill = new Skill;
+	      	$skill = new Skill;
 			$skill->name = $request->input('name');
 			$skill->description = $request->input('description');
 			$skill->major_id = $request->input('major_id');

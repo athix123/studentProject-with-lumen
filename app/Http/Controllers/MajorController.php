@@ -10,7 +10,7 @@ use App\Skill;
 class MajorController extends Controller
 {
 	public function __construct(){
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	public function all(Request $request){
@@ -35,6 +35,25 @@ class MajorController extends Controller
 		return response()->json($major);
 	}
 
+	public function getById(Request $request, $id) {
+
+		$major = Major::find($id);
+
+		if($major == null) {
+
+			$response = [
+				'status' => 'Forbidden',
+				'message' => 'Id is not exist'
+			];
+
+			return response()->json($response, 404);
+		}
+		
+		$response['result'] = $major;
+
+		return response()->json($response, 200);
+	}
+
 	public function getMajorSkillById($id){
 
 		$major = Major::select(
@@ -57,11 +76,11 @@ class MajorController extends Controller
 		$major = Major::find($id);
 		if($major == null) {
 			$response = [
-			'status' => 'Forbidden',
-			'message' => 'Id is not exist'
+				'status' => 'Forbidden',
+				'message' => 'Id is not exist'
 			];
 
-			return response()->json($response, 403);
+			return response()->json($response, 404);
 		}
 		
 		$response['result'] = $result;

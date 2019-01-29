@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 class OurWorkController extends Controller
 {
 	public function __construct(){
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	public function get(Request $request){
@@ -53,6 +53,7 @@ class OurWorkController extends Controller
 				];
 			
 				return response()->json($response, 403);
+				
 			} else {
 
 				$ourWork = new OurWorK;
@@ -71,6 +72,7 @@ class OurWorkController extends Controller
 			}
 
 		} catch (\Illuminate\Database\QueryException $e) {
+		  
 		    if($e->getCode() === '23000') {
 				
 				$response = [
@@ -98,6 +100,7 @@ class OurWorkController extends Controller
 			];
 		
 			return response()->json($response, 403);
+
 		} else {
 			
 			$ourWork->update(['category' => $inputan['category'],
@@ -117,75 +120,11 @@ class OurWorkController extends Controller
 		}
 	}
 
-	public function postFile(Request $request) {
-
-		if ($request->hasFile('file')) {
-
-			$image = $request->file('file');
-			$fileName = str_random(15).'.'.$image->getClientOriginalExtension();
-			$path = 'images/';
-			$image->move($path, $fileName);
-
-			$response = [
-			'status' => 'Success',
-			'messages' => 'File uploaded',
-			'url' => url().'/'.$path.$fileName,
-			];	
-
-			return response()->json($response, 200); 
-		} else {
-			$response = [
-			'status' => 'Forbidden',
-			'messages' => 'Failed to Upload File'
-			];
-		}
-
-		return response()->json($response, 403); 
-	}
-
-	public function updateFile(Request $request, $id) {
-
-		$ourWork = OurWorK::find($id);
-
-		if ($ourWork == null) {
-
-			$response = [
-			'status' => 'Forbidden',
-			'messages' => 'Ourwork is not exist',
-			];
-			
-			return response()->json($response, 403);
-
-		} elseif ($request->hasFile('file')) {
-
-			$image = $request->file('file');
-			$fileName = str_random(15).'.'.$image->getClientOriginalExtension();
-			$path = 'images/';
-			$image->move($path, $fileName);
-		
-			File::delete($ourWork->file); 
-			
-			$ourWork->file = $path . $fileName;
-
-			$response = [
-			'status' => 'Success',
-			'messages' => 'File uploaded',
-			'url' => url().'/'.$path.$fileName,
-			];	
-		}	
-
-		$ourWork->save();
-		
-		return response()->json($response, 200); 
-	}
-
 	public function delete(Request $request, $id) {
 		$response = [
 			'status'=> null,
 			'message'=> null
 		];
-
-		// $inputan = $request->all();
 
 		$ourWork = OurWork::find($id);
 
@@ -200,7 +139,9 @@ class OurWorkController extends Controller
 						];
 			
 			return response()->json($response);
+
 		} else {
+
 			$response = ['status' => 'Error',
 						'message' => 'Our Work with id '.$id.' Not Found'
 						];

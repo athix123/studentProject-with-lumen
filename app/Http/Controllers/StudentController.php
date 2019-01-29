@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
 class StudentController extends Controller
 {
 	public function __construct(){
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	public function all(Request $request){
@@ -207,14 +207,13 @@ class StudentController extends Controller
 		$data->status = $inputan['status'];
 		$data->major = $inputan['major'];
 		$data->generations = $inputan['generations'];
+		$data->profile_picture = $inputan['profile_picture'];
 
 		$data->save();
 
 		$i = 0;
  		foreach ($inputan['skills'] as $key => $value) {
- 			// print $key;
- 			// print $value;
- 			// var_dump($value);
+
 			$student_skill = Studentskill::where('student_id', $id)
 							->where('skill_id', $value['id'])
 							->update(['score' => $value['score']]);
@@ -262,78 +261,6 @@ class StudentController extends Controller
 			$response['message'] = 'Student with id ' . $id . ' Not Found';
 			
 			return response()->json($response, 404);
-		}
-	}
-
-	public function postFile(Request $request) {
-		
-		if ($request->hasFile('profile_picture')) {
-
-			$image = $request->file('profile_picture');
-			$name = str_random(15).'.'.$image->getClientOriginalExtension();
-			$path = 'images/';
-			$image->move($path, $name);
-
-			$response = [
-				'status' => 'Success',
-				'messages' => 'File uploaded',
-				'url' => url().'/'.$path.$name
-			];
-
-			return response()->json($response, 200); 
-
-		} else {
-
-			$response = [
-				'status' => 'Error',
-				'messages' => 'Failed to upload'
-			];
-
-			return response()->json($response, 403);
-		}
-	}
-
-	public function updateFile(Request $request, $id) {
-
-		$student = Student::find($id);
-
-		if ($about == null) {
-
-			$response = [
-				'status' => 'Forbidden',
-				'messages' => 'Id is not exist'
-			];
-			
-			return response()->json($response, 403);
-		
-		} else if ($request->hasFile('profile_picture')) {
-
-			$image = $request->file('profile_picture');
-			$name = str_random(15).'.'.$image->getClientOriginalExtension();
-			$path = 'images/';
-			$image->move($path, $name);
-
-			File::delete($student->profile_picture);
-
-			$student->profile_picture = $path .  $name;
-			$student->save();
-
-			$response = [
-				'status' => 'Success',
-				'messages' => 'File uploaded',
-				'url' => url().'/'.$path.$name
-			];
-
-			return response()->json($response, 200); 
-
-		} else {
-
-			$response = [
-				'status' => 'Error',
-				'messages' => 'Failed to upload'
-			];
-
-			return response()->json($response, 403);
 		}
 	}
 }

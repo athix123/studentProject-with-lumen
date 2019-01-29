@@ -28,8 +28,6 @@ $router->group(['prefix' => 'v1/student'], function () use ($router) {
 	$router->get('/{id}', 'StudentController@getById');
 	$router->post('/create', 'StudentController@create');
 	$router->put('/update/{id}', 'StudentController@update');
-	$router->post('/postfile','StudentController@postFile');
-	$router->post('/updatefile/{id}','StudentController@updateFile');
 	$router->delete('/delete/{id}', 'StudentController@delete');
 	$router->get('/skill/{id}', 'StudentController@getStudentSkill');
 	$router->get('/character/{id}', 'StudentController@getStudentChar');
@@ -41,13 +39,11 @@ $router->group(['prefix' => 'v1/student'], function () use ($router) {
 // Router for Major
 $router->group(['prefix' => 'v1/major'], function () use ($router) {
 	$router->get('/','MajorController@all');
+	$router->get('/{id}','MajorController@getById');
 	$router->get('/skill/{id}', 'MajorController@getMajorSkillById');
 	$router->post('/create', 'MajorController@create');
 	$router->put('/update/{id}', 'MajorController@update');
 	$router->delete('/delete/{id}', 'MajorController@delete');
-	// $router->get('/{id}','MajorController@all');
-	// $router->get('/major/{name}', 'MajorController@getByMajorName');
-	// $router->get('/{slug}', 'MajorController@getByMajorName');
 });
 
 // Router for Skill
@@ -58,7 +54,6 @@ $router->group(['prefix' => 'v1/skill'], function () use ($router) {
 	$router->put('/update/{id}', 'SkillController@update');
 	$router->delete('/delete/{id}', 'SkillController@delete');
 	$router->get('/major/{id}','SkillController@getByMajorId');
-	// $router->get('/{slug}', 'SkillController@getBySkillName');
 });
 
 // Router for Character
@@ -72,28 +67,23 @@ $router->group(['prefix' => 'v1/character'], function () use ($router) {
 
 // Router for About
 $router->group(['prefix' => 'v1/about'], function () use ($router) {
-	$router->get('','AboutController@get');
-	$router->post('/updatefile/{id}', 'AboutController@updatefile');
-	$router->put('/update/{id}','AboutController@updatedesc');
-	$router->post('','AboutController@create');
-	// $router->post('/uploadfile', 'AboutController@uploadFile');
+	$router->get('/','AboutController@get');
+	$router->put('/update/{id}','AboutController@update');
+	$router->post('/','AboutController@create');
 });
 
 // Router for Founder
 $router->group(['prefix' => 'v1/founder'], function () use ($router) {
-	$router->get('','FounderController@get');
-	$router->post('/updatefile/{id}','FounderController@updatefile');
-	$router->put('/update/{id}','FounderController@updatedesc');
+	$router->get('/','FounderController@get');
+	$router->put('/update/{id}','FounderController@update');
 	$router->post('','FounderController@create');
 });
 
 // Router for OurWork
 $router->group(['prefix' => 'v1/ourwork'], function () use ($router) {
-	$router->get('','OurWorkController@get');
+	$router->get('/','OurWorkController@get');
 	$router->get('/{id}', 'OurWorkController@getById');
 	$router->post('/create','OurWorkController@create');
-	$router->post('/postfile','OurWorkController@postFile');
-	$router->post('/updatefile/{id}','OurWorkController@updateFile');
 	$router->put('/update/{id}', 'OurWorkController@update');
 	$router->delete('/delete/{id}', 'OurWorkController@delete');
 });
