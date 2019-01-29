@@ -37,10 +37,10 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if ($this->auth->guard($guard)->guest()) {
-            $token = $request->header('api_token');
+            $token = $request->header('token');
             if ($token) {
-                $token = $request->header('api_token');
-                $check_token = User::where('api_token', $token)->first();
+                $token = $request->header('token');
+                $check_token = User::where('token', $token)->first();
                 if ($check_token == null) {
                     $res['success'] = false;
                     $res['message'] = 'Permission not allowed!';

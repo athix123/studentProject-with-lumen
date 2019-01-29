@@ -57,14 +57,14 @@ class UserController extends Controller
             
             if ($hasher->check($password, $login->password)) {
 
-                $api_token = sha1(time());
+                $token = sha1(time());
 
-                $create_token = User::where('id', $login->id)->update(['api_token' => $api_token]);
+                $create_token = User::where('id', $login->id)->update(['token' => $token]);
                 
                 if ($create_token) {
                    
                     $res['success'] = true;
-                    $res['api_token'] = $api_token;
+                    $res['token'] = $token;
                     $res['message'] = $login;
 
                     return response()->json($res, 200);
