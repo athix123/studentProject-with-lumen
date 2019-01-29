@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 class FounderController extends Controller
 {
 	public function __construct(){
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	public function get(Request $request){
