@@ -19,13 +19,14 @@ $router->get('/', function () use ($router) {
 $router->post('/v1/register', 'UserController@register');
 $router->post('/v1/login', 'UserController@login');
 $router->get('/user/{id}', 'LoginController@index');
-$router->get('/student/all', ['middleware' => 'auth', 'uses' =>  'StudentController@all']);
+$router->get('/student/allauth', ['middleware' => 'auth', 'uses' =>  'StudentController@all']);
 $router->post('/v1/studentbox','DoesBoxController@upload');
 
 // Router for Students
+$router->get('/v1/student/all','StudentController@all');
+$router->get('/v1/student/{id}', 'StudentController@getById');
 $router->group(['prefix' => 'v1/student'], function () use ($router) {
-	$router->get('/', 'StudentController@all');
-	$router->get('/{id}', 'StudentController@getById');
+	// $router->get('/', 'StudentController@all');
 	$router->post('/create', 'StudentController@create');
 	$router->put('/update/{id}', 'StudentController@update');
 	$router->delete('/delete/{id}', 'StudentController@delete');
@@ -66,23 +67,23 @@ $router->group(['prefix' => 'v1/character'], function () use ($router) {
 });
 
 // Router for About
-$router->group(['prefix' => 'v1/about'], function () use ($router) {
-	$router->get('/','AboutController@get');
+$router->get('/v1/about','AboutController@get');
+$router->group(['prefix' => 'v1/about',  'middleware' => 'auth'], function () use ($router) {
 	$router->put('/update/{id}','AboutController@update');
 	$router->post('/','AboutController@create');
 });
 
 // Router for Founder
-$router->group(['prefix' => 'v1/founder'], function () use ($router) {
-	$router->get('/','FounderController@get');
+$router->get('/v1/founder', 'FounderController@get');
+$router->group(['prefix' => 'v1/founder', 'middleware' => 'auth'], function () use ($router) {
 	$router->put('/update/{id}','FounderController@update');
-	$router->post('','FounderController@create');
+	$router->post('/','FounderController@create');
 });
 
 // Router for OurWork
-$router->group(['prefix' => 'v1/ourwork'], function () use ($router) {
-	$router->get('/','OurWorkController@get');
-	$router->get('/{id}', 'OurWorkController@getById');
+$router->get('/v1/ourwork','OurWorkController@get');
+$router->get('/v1/ourwork/{id}', 'OurWorkController@getById');
+$router->group(['prefix' => 'v1/ourwork','middleware' => 'auth'], function () use ($router) {
 	$router->post('/create','OurWorkController@create');
 	$router->put('/update/{id}', 'OurWorkController@update');
 	$router->delete('/delete/{id}', 'OurWorkController@delete');
