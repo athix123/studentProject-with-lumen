@@ -25,42 +25,42 @@ $router->post('/v1/studentbox','DoesBoxController@upload');
 // Router for Students
 $router->get('/v1/student/all','StudentController@all');
 $router->get('/v1/student/{id}', 'StudentController@getById');
-$router->group(['prefix' => 'v1/student'], function () use ($router) {
+$router->get('/skill/{id}', 'StudentController@getStudentSkill');
+$router->get('/character/{id}', 'StudentController@getStudentChar');
+$router->group(['prefix' => 'v1/student',  'middleware' => 'auth'], function () use ($router) {
 	// $router->get('/', 'StudentController@all');
 	$router->post('/create', 'StudentController@create');
 	$router->put('/update/{id}', 'StudentController@update');
 	$router->delete('/delete/{id}', 'StudentController@delete');
-	$router->get('/skill/{id}', 'StudentController@getStudentSkill');
-	$router->get('/character/{id}', 'StudentController@getStudentChar');
 	// $router->get('/student/all', 'StudentController@all');
 	// $router->put('/skill/update/{id}', 'StudentController@update');
 	// $router->get('/major/{id}', 'StudentController@getStudentMajor');
 });
 
 // Router for Major
-$router->group(['prefix' => 'v1/major'], function () use ($router) {
-	$router->get('/','MajorController@all');
-	$router->get('/{id}','MajorController@getById');
-	$router->get('/skill/{id}', 'MajorController@getMajorSkillById');
+$router->get('/','MajorController@all');
+$router->get('/{id}','MajorController@getById');
+$router->get('/skill/{id}', 'MajorController@getMajorSkillById');
+$router->group(['prefix' => 'v1/major',  'middleware' => 'auth'], function () use ($router) {
 	$router->post('/create', 'MajorController@create');
 	$router->put('/update/{id}', 'MajorController@update');
 	$router->delete('/delete/{id}', 'MajorController@delete');
 });
 
 // Router for Skill
-$router->group(['prefix' => 'v1/skill'], function () use ($router) {
-	$router->get('/','SkillController@all');
-	$router->get('/{id}', 'SkillController@getById');
+$router->get('/','SkillController@all');
+$router->get('/{id}', 'SkillController@getById');
+$router->get('/major/{id}','SkillController@getByMajorId');
+$router->group(['prefix' => 'v1/skill',  'middleware' => 'auth'], function () use ($router) {
 	$router->post('/create','SkillController@create');
 	$router->put('/update/{id}', 'SkillController@update');
 	$router->delete('/delete/{id}', 'SkillController@delete');
-	$router->get('/major/{id}','SkillController@getByMajorId');
 });
 
 // Router for Character
-$router->group(['prefix' => 'v1/character'], function () use ($router) {
-	$router->get('/','CharacterController@all');
-	$router->get('/{id}', 'CharacterController@getById');
+$router->get('/','CharacterController@all');
+$router->get('/{id}', 'CharacterController@getById');
+$router->group(['prefix' => 'v1/character',  'middleware' => 'auth'], function () use ($router) {
 	$router->post('/create','CharacterController@create');
 	$router->put('/update/{id}', 'CharacterController@update');
 	$router->delete('/delete/{id}', 'CharacterController@delete');
