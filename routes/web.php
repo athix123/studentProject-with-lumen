@@ -25,8 +25,8 @@ $router->post('/v1/studentbox','DoesBoxController@upload');
 // Router for Students
 $router->get('/v1/student/all','StudentController@all');
 $router->get('/v1/student/{id}', 'StudentController@getById');
-$router->get('/skill/{id}', 'StudentController@getStudentSkill');
-$router->get('/character/{id}', 'StudentController@getStudentChar');
+$router->get('/v1/student/skill/{id}', 'StudentController@getStudentSkill');
+$router->get('/v1/student/character/{id}', 'StudentController@getStudentChar');
 $router->group(['prefix' => 'v1/student',  'middleware' => 'auth'], function () use ($router) {
 	// $router->get('/', 'StudentController@all');
 	$router->post('/create', 'StudentController@create');
@@ -38,9 +38,9 @@ $router->group(['prefix' => 'v1/student',  'middleware' => 'auth'], function () 
 });
 
 // Router for Major
-$router->get('/','MajorController@all');
-$router->get('/{id}','MajorController@getById');
-$router->get('/skill/{id}', 'MajorController@getMajorSkillById');
+$router->get('/v1/major','MajorController@all');
+$router->get('/v1/major/{id}','MajorController@getById');
+$router->get('/v1/major/skill/{id}', 'MajorController@getMajorSkillById');
 $router->group(['prefix' => 'v1/major',  'middleware' => 'auth'], function () use ($router) {
 	$router->post('/create', 'MajorController@create');
 	$router->put('/update/{id}', 'MajorController@update');
@@ -48,9 +48,9 @@ $router->group(['prefix' => 'v1/major',  'middleware' => 'auth'], function () us
 });
 
 // Router for Skill
-$router->get('/','SkillController@all');
-$router->get('/{id}', 'SkillController@getById');
-$router->get('/major/{id}','SkillController@getByMajorId');
+$router->get('/v1/skill','SkillController@all');
+$router->get('/v1/skill/{id}', 'SkillController@getById');
+$router->get('/v1/skill/major/{id}','SkillController@getByMajorId');
 $router->group(['prefix' => 'v1/skill',  'middleware' => 'auth'], function () use ($router) {
 	$router->post('/create','SkillController@create');
 	$router->put('/update/{id}', 'SkillController@update');
@@ -58,8 +58,8 @@ $router->group(['prefix' => 'v1/skill',  'middleware' => 'auth'], function () us
 });
 
 // Router for Character
-$router->get('/','CharacterController@all');
-$router->get('/{id}', 'CharacterController@getById');
+$router->get('/v1/character','CharacterController@all');
+$router->get('/v1/character/{id}', 'CharacterController@getById');
 $router->group(['prefix' => 'v1/character',  'middleware' => 'auth'], function () use ($router) {
 	$router->post('/create','CharacterController@create');
 	$router->put('/update/{id}', 'CharacterController@update');
