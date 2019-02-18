@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 //use Illuminate\Database\Eloquent\SoftDeletes;
 
-class About extends Model 
+class Tentang extends Model 
 {
 
 //	use SoftDeletes;
 
-    protected $table = 'about';
+    protected $table = 'tentang';
     //protected $dates = ['deleted_at'];
     protected $fillable = [
-        'description', 'file'
+        'deskripsi', 'gambar'
     ];
 
     public $timestamps = false;

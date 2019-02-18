@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TableFounder extends Migration
+class TableArtikel extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class TableFounder extends Migration
      */
     public function up()
     {
-            Schema::create('founder', function (Blueprint $table) {
+        Schema::create('artikel', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('description');
-            $table->string('file')->nullable();
-            $table->softDeletes();
+            $table->string('judul', 100);
+            $table->text('artikel');
+            $table->string('gambar', 200);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class TableFounder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('founder');
+        Schema::dropIfExists('artikel');
     }
 }

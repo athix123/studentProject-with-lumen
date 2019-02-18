@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\About;
+use App\Tentang;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -11,34 +11,35 @@ use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use GrahamCampbell\Flysystem\Facades\Flysystem;
 
-class AboutController extends Controller
+class TentangController extends Controller
 {
 	public function __construct(){
-		$this->middleware('auth');
+		// $this->middleware('auth');
 	}
 
 	public function get(Request $request){
 
-		$about = About::all();
+		$tentang = Tentang::all();
 		
-		return response()->json($about, 200);
+		return response()->json($tentang, 200);
 	}
 
 	public function create(Request $request){
-		$about = $request->all();
+		$tentang = $request->all();
 		
-		if($about == null) {
+		if($tentang == null) {
 			$response['status'] = 'Error';
 			$response['message'] = 'Please fill the empty blank';
 
 			return response()->json($response, 403);
 		} else {
-			$about = new About;
-			$about->description = $request->input('description');
-			$about->save();
+			$tentang = new Tentang;
+			$tentang->deskripsi = $request->input('deskripsi');
+			$tentang->gambar = $request->input('gambar');
+			$tentang->save();
 		
 			$response['status'] = 'Success';
-			$response['message'] = 'New about Submitted';
+			$response['message'] = 'New tentang Submitted';
 		
 			return response()->json($response, 200);
 		}
@@ -48,9 +49,9 @@ class AboutController extends Controller
 		
 		$inputan =$request->all();
 
-		$about = About::find($id);
+		$tentang = Tentang::find($id);
 
-		if($about == null) {
+		if($tentang == null) {
 			$response = [
 			'status' => 'Forbidden',
 			'messages' => 'Id is not exist',
@@ -59,13 +60,13 @@ class AboutController extends Controller
 			return response()->json($response, 403);
 		} else {
 
-			$about->update(['description' => $inputan['description'],
-							'file' => $inputan['file']]);
+			$tentang->update(['deskripsi' => $inputan['deskripsi'],
+							'gambar' => $inputan['gambar']]);
 
 			$response = [
 			'status' => 'Success',
-			'messages' => 'About updated',
-			'result' => $about
+			'messages' => 'tentang updated',
+			'result' => $tentang
 			];
 			
 			return response()->json($response, 200);
