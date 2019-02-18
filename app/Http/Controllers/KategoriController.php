@@ -2,55 +2,64 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Student;
-use App\Skill;
-use App\Major;
-use App\Character;
+use App\Kategori;
 
-class CharacterController extends Controller
+class KategoriController extends Controller
 {
 	public function __construct(){
-		$this->middleware('auth');
+		// $this->middleware('auth');
 	}
 
-	public function all(Request $request){
+	public function get(Request $request){
 		$query = $request->query();
 		if ($query) {
 			if ($query['withDeleted'] == 'true') {
-				$char = Character::withTrashed()->get();
+				$kategori = Kategori::withTrashed()->get();
 			} 
 		} else {
-			$char = Character::all();
+			$kategori = Kategori::all();
 		}
-		return response()->json($char);
+		return response()->json($kategori);
 	}
 
 	public function getById($id){
-		$char = Character::find($id);
+		$kategori = Kategori::find($id);
 
-		if($char){
+		if($kategori){
 
-			$response['result'] = $char;
+			$response['result'] = $kategori;
 
 			return response()->json($response, 200);
 		}
 
 		$response = ['status' => 'Error',
-					'message' => 'Character with id ' . $id . ' Not Found'
+					'message' => 'Kategori with id ' . $id . ' Not Found'
 					];
 		
 		return response()->json($response, 404);
 	}
 
+	public function getByProduk($id) {
+
+		$data = Kategori::join('produk','kategori.id','=','produk.id_kategori')
+				->where('kategori.id', $id)
+				->select('produk.*',
+						'kategori.kategori as Kategori'
+						)
+				->get();
+
+			return response()->json($data);
+	}
+
 	public function create(Request $request){
 		try{
-	        $char = new Character;
-			$char->name = $request->input('name');
-			$char->description = $request->input('description');
-			$char->save();
+	        $kategori = new Kategori;
+	        // $kategori->id_produk = $request->input('id_produk');
+			$kategori->kategori = $request->input('kategori');
+			$kategori->save();
 
 			$response['status'] = 'Success';
-			$response['message'] = 'New Character Submitted';
+			$response['message'] = 'New Kategori Submitted';
 			
 			return response()->json($response, 200);
 	    
@@ -75,22 +84,20 @@ class CharacterController extends Controller
 
 			$inputan = $request->all();
 
-			$char = Character::find($id);
+			$kategori = Kategori::find($id);
 
-			if($char) {
-				Character::where('id', $id);
-				$char->name = $inputan['name'];
-				$char->description = $inputan['description'];
-				// $char->major_id = $inputan['major_id'];
-				$char->save();
+			if($kategori) {
+				Kategori::where('id', $id);
+				$kategori->kategori = $inputan['kategori'];
+				$kategori->save();
 			
 				$response['status'] = 'Success';
-				$response['message'] = 'Character with name '. $char->name .' updated';
+				$response['message'] = 'Kategori with name '. $kategori->kategori .' updated';
 			
 				return response()->json($response);
 			} else {
 				$response['status'] = 'Error';
-				$response['message'] = 'Character with id ' . $id . ' Not Found';
+				$response['message'] = 'Kategori with id ' . $id . ' Not Found';
 			
 				return response()->json($response, 404);
 			}
@@ -102,8 +109,8 @@ class CharacterController extends Controller
 	        if($error_code == 1062){
 
 	        	$response = [
-				'status' => 'Error',
-				'messages' => 'You have a duplicate entry problem'
+					'status' => 'Error',
+					'messages' => 'You have a duplicate entry problem'
 				];
 	    
 	            return response()->json($response, 400);
@@ -119,17 +126,17 @@ class CharacterController extends Controller
 
 		$inputan = $request->all();
 
-		$char = Character::find($id);
+		$kategori = Kategori::find($id);
 
-		if ($char) {
-			Character::where('id',$id)->delete();
+		if ($kategori) {
+			Kategori::where('id',$id)->delete();
 			$response['status'] = 'Success';
-			$response['message'] = 'Character with name '.$char->name.' deleted';
+			$response['message'] = 'Kategori with name '.$kategori->name.' deleted';
 			
 			return response()->json($response);
 		} else {
 			$response['status'] = 'Error';
-			$response['message'] = 'Character with id ' . $id . ' Not Found';
+			$response['message'] = 'Kategori with id ' . $id . ' Not Found';
 			
 			return response()->json($response, 404);
 		}

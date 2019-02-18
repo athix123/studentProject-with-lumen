@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TableCharacter extends Migration
+class TableTentang extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class TableCharacter extends Migration
      */
     public function up()
     {
-        Schema::create('karakter', function (Blueprint $table){
+        Schema::create('tentang', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 30)->unique();
-            $table->string('description', 140)->nullable();
+            $table->text('deskripsi');
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class TableCharacter extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('karakter');
+        Schema::dropIfExists('tentang');
     }
 }

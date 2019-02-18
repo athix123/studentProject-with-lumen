@@ -9,22 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class Studentskill extends Model implements AuthenticatableContract, AuthorizableContract
+class Kategori extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
 
-    protected $table = 'student_skills';
+    protected $table = 'kategori';
 
     protected $fillable = [
-        'student_id', 'skill_id',
+        'kategori',
     ];
 
-    protected $hidden = [
-        'password',
-    ];
-
-    public function student()
-    {
-    	return $this->belongsToMany('App\Student');
+    public function produk() {
+    	return $this->hasMany('App\Produk');
     }
 }

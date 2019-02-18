@@ -4,24 +4,26 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use App\User;
+use App\Pengguna;
 
-class UserController extends Controller
+class PenggunaController extends Controller
 {
     public function register(Request $request)
     {
         $hasher = app()->make('hash');
 
-        $username = $request->input('username');
+        $pengguna = new Pengguna;
+        $pengguna->namaPengguna = $request->input('username');
+        $pengguna->namaLengkap = $request->input('fullname');
+        $pengguna->jenisKelamin = $request->input('gender');
+        $pengguna->tanggalLahir = $request->input('birthday');
+        $pengguna->email = $request->input('email');
+        $pengguna->noHp = $request->input('phone');
 
-        $password = $hasher->make($request->input('password'));
+        $pengguna->sandi = $hasher->make($request->input('password'));
+        $pengguna->save();
 
-        $register = User::create([
-            'username'=> $username,
-            'password'=> $password
-        ]);
-
-        if ($register) {
+        if ($request) {
 
             $res['success'] = true;
             $res['message'] = 'Success register!';
@@ -41,10 +43,10 @@ class UserController extends Controller
     {
         $hasher = app()->make('hash');
 
-        $username = $request->input('username');
-        $password = $request->input('password');
+        $namaPengguna = $request->input('username');
+        $sandi = $request->input('password');
 
-        $login = User::where('username', $username)->first();
+        $login = Pengguna::where('namaPengguna', $namaPengguna)->first();
 
         if (!$login) {
             
@@ -54,12 +56,11 @@ class UserController extends Controller
             return response($res, 404);
 
         }else{
-            
-            if ($hasher->check($password, $login->password)) {
 
+            if ($hasher->check($sandi, $login->sandi)) {
                 $token = sha1(time());
 
-                $create_token = User::where('id', $login->id)->update(['token' => $token]);
+                $create_token = Pengguna::where('id', $login->id)->update(['token' => $token]);
                 
                 if ($create_token) {
                    
